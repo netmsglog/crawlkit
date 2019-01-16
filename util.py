@@ -114,6 +114,7 @@ class MyRequest:
 		outf.close()
 		return len(raw.text)
 
+# smart class
 class MyChrome:
 	headers = {
 		'user-agent': DEFAULT_UA
