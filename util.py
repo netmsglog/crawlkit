@@ -121,14 +121,17 @@ class MyChrome:
 	}
 	_driver = None
 
-	def __init__(self, headless = True, userdir = ''):
+	def __init__(self, headless = True, userdir = '', ua = None):
 		chrome_options = Options()
 		if headless:
 			chrome_options.add_argument("--headless")
 		# in Mac: d=util.MyChrome(False,'/Users/yu/Library/Application Support/Google/Chrome')
 		if userdir != '':
 			chrome_options.add_argument(f'user-data-dir={userdir}')
-		ua = generate_user_agent()
+		if ua is None:
+			ua = DEFAULT_UA
+		if ua == 'random':
+			ua = generate_user_agent()	
 		chrome_options.add_argument(f'user-agent={ua}')
 		chrome_options.add_argument("--window-size=1920x1080")
 		# required by running as root
@@ -156,7 +159,7 @@ class MyChrome:
 		for i in range(60):            # 循环60次，从0至59
 			if i >= 59 :               # 当i大于等于59时，打印提示时间超时
 				print(element_desc, "timeout")
-				print(self._driver.page_source)
+				#print(self._driver.page_source)
 				break
 			try:
 				element = find_func(find_para)                     # try代码块中出现找不到特定元素的异常会执行except中的代码
@@ -182,7 +185,7 @@ class MyChrome:
 			if element: # 如果能查找到特定的元素id就提前退出循环
 				return element
 		except:                    # 上面try代码块中出现异常，except中的代码会执行打印提示会继续尝试查找特定的元素id
-			print('not found')
+			print(element_xpath_or_id, 'not found')
 		return None
 
 	def infinite_scroll(self,SCROLL_PAUSE_TIME = 1):
