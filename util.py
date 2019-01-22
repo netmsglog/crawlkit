@@ -210,3 +210,4 @@ class MyChrome:
 	def close(self):
 		if self._driver is not None:
 			self._driver.close()
+			self._driver.quit()
