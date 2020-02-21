@@ -7,7 +7,7 @@ import time
 import json
 import hashlib
 from bs4 import BeautifulSoup
-from user_agent import generate_user_agent
+# from user_agent import generate_user_agent
 from selenium.webdriver.support.ui import WebDriverWait
 
 
@@ -128,8 +128,8 @@ class MyChrome:
 		# in Mac: d=util.MyChrome(False,'/Users/yu/Library/Application Support/Google/Chrome')
 		if userdir != '':
 			chrome_options.add_argument(f'user-data-dir={userdir}')
-		ua = generate_user_agent()
-		chrome_options.add_argument(f'user-agent={ua}')
+		#ua = generate_user_agent()
+		#chrome_options.add_argument(f'user-agent={ua}')
 		chrome_options.add_argument("--window-size=1920x1080")
 		# required by running as root
 		chrome_options.add_argument("--no-sandbox")
@@ -206,4 +206,4 @@ class MyChrome:
 
 	def close(self):
 		if self._driver is not None:
-			self._driver.close()
+			self._driver.quit()
